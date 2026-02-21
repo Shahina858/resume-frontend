@@ -5,7 +5,6 @@ export const generateTailoredResume = async (payload) => {
   return res.data;
 };
 
-
 export const getMyTailoredResumes = async () => {
   const res = await api.get("/tailored-resume");
   return res.data;
@@ -18,9 +17,15 @@ export const getTailoredResumeById = async (id) => {
 
 export const downloadTailoredResumePDF = (id) => {
   const token = localStorage.getItem("token");
+  const baseURL = import.meta.env.VITE_API_BASE_URL;
+
+  if (!baseURL) {
+    console.error("VITE_API_BASE_URL is not defined");
+    return;
+  }
 
   window.open(
-    `http://localhost:5000/api/tailored-resume/${id}/pdf?token=${token}`,
+    `${baseURL}/api/tailored-resume/${id}/pdf?token=${token}`,
     "_blank"
   );
 };
